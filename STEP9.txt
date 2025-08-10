@@ -1,0 +1,4 @@
+saveRDS(coded_df, "coded_df.rds")
+saveRDS(class_means, "class_means.rds")
+writeLines(capture.output(sessionInfo()), "sessionInfo.txt")
+cat("All outputs saved.\n")

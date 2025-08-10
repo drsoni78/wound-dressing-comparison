@@ -1,0 +1,34 @@
+set.seed(12345)
+R <- 100  # Reduced for testing; use 1000 later
+classes <- unique(coded_df$Class)
+rank_counts <- matrix(0, nrow = 5, ncol = 5, dimnames = list(classes, paste0('Rank',1:5)))
+
+class_data <- split(coded_df, coded_df$Class)
+
+for (i in 1:R) {
+  boot_means <- sapply(classes, function(cl) {
+    sampled <- sample_n(class_data[[cl]], size = 5, replace = TRUE)
+    colMeans(sampled %>% select(Absorption:Cost))
+  }, simplify = 'matrix')
+
+  closeness <- compute_topsis(t(boot_means))
+  ranks <- rank(-closeness)
+
+  for (cl in classes) {
+    rank_counts[cl, ranks[cl]] <- rank_counts[cl, ranks[cl]] + 1
+  }
+}
+
+top1_freq <- rank_counts[,1] / R
+top1_df <- tibble(Class = names(top1_freq), Top1_Freq = top1_freq) %>% arrange(desc(Top1_Freq))
+write_csv(top1_df, 'bootstrap_top1_frequency.csv')
+
+p_boot <- ggplot(top1_df, aes(x = reorder(Class, Top1_Freq), y = Top1_Freq)) +
+  geom_col(fill = 'darkgreen') +
+  coord_flip() +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  theme_minimal() +
+  labs(title = 'Bootstrap: % of Times Class Ranked #1', x = '', y = 'Top-1 Frequency')
+
+ggsave('figs/figure_bootstrap_top1.png', p_boot, width = 8, height = 4, dpi = 300)
+print(p_boot)  # Must print!

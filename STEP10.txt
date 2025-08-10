@@ -1,0 +1,17 @@
+ DR NAVNEET OMPRAKASH  SONI . (2025). A 9-Step Reproducible Framework for Comparing Wound Dressings in Exuding Wounds [Computer software]. GitHub. https://github.com/drsoni78/wound-dressing-comparison
+
+
+
+    This analysis is designed for interactive learning and reproduction: 
+
+        Open wound_dressing_analysis.Rmd in RStudio
+        Run each of the 10 numbered code chunks in order (from # Step 1 to # Step 10)
+        After Step 6, you’ll see the TOPSIS ranking  
+        After Step 7, the bootstrap result  
+        After Step 8, the radar chart will be saved and displayed
+         
+
+    No prior R expertise needed — just copy, run, and learn.
+
+
+This study provides a practical, step-by-step, and console-friendly framework for comparing wound dressings using real-world product data. The full analysis is organized into 10 clearly numbered steps, allowing users to run each block of code directly in the R console — from data input to final radar chart. This design lowers the barrier to entry for non-programmers, enabling nurses, educators, and healthcare decision-makers to reproduce, verify, and adapt the analysis for their own settings. By combining transparency, reproducibility, and usability, this work serves not only as a comparative study but as an interactive teaching tool and decision-support model for evidence-based wound care. It empowers users to move beyond marketing claims and make structured, data-informed choices in dressing selection.

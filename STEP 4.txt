@@ -1,0 +1,20 @@
+class_means <- coded_long %>%
+  group_by(Class, Property) %>%
+  summarise(MeanCode = mean(Code), .groups = 'drop') %>%
+  pivot_wider(names_from = Class, values_from = MeanCode)
+
+write_csv(class_means, 'class_means_per_property.csv')
+
+cm_long <- class_means %>%
+  pivot_longer(cols = -Property, names_to = 'Class', values_to = 'Mean')
+
+p_heat <- ggplot(cm_long, aes(x = Class, y = Property, fill = Mean)) +
+  geom_tile(color = 'white') +
+  scale_fill_viridis_c(option = 'plasma', limits = c(1, 3)) +
+  theme_minimal() +
+  labs(title = 'Heatmap: Mean Coded Scores', fill = 'Mean Code') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Save and print
+ggsave('figs/figure_heatmap_class_means.png', p_heat, width = 9, height = 6, dpi = 300)
+print(p_heat)  # This ensures it shows in R session

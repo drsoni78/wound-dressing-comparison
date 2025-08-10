@@ -1,0 +1,31 @@
+compute_topsis <- function(decision, weights = NULL) {
+  if (is.null(weights)) weights <- rep(1/ncol(decision), ncol(decision))
+  norm_factors <- sqrt(colSums(decision^2))
+  norm_factors[norm_factors == 0] <- 1e-9
+  norm_mat <- sweep(decision, 2, norm_factors, '/')
+  wnorm <- sweep(norm_mat, 2, weights, '*')
+  pos_ideal <- apply(wnorm, 2, max)
+  neg_ideal <- apply(wnorm, 2, min)
+  dist_pos <- apply(wnorm, 1, function(x) sqrt(sum((x - pos_ideal)^2)))
+  dist_neg <- apply(wnorm, 1, function(x) sqrt(sum((x - neg_ideal)^2)))
+  closeness <- dist_neg / (dist_pos + dist_neg)
+  return(closeness)
+}
+
+decision_matrix <- class_means %>% select(-Property) %>% as.matrix()
+decision_topsis <- t(decision_matrix)  # Classes as rows
+closeness <- compute_topsis(decision_topsis)
+
+res_topsis <- tibble(Class = rownames(decision_topsis), Closeness = closeness) %>%
+  arrange(desc(Closeness))
+
+write_csv(res_topsis, 'topsis_class_ranking_equal_weights.csv')
+
+p_topsis <- ggplot(res_topsis, aes(x = reorder(Class, Closeness), y = Closeness)) +
+  geom_col(fill = 'steelblue') +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = 'TOPSIS Closeness - Class Ranking', x = '', y = 'Closeness')
+
+ggsave('figs/figure_topsis_class_ranking.png', p_topsis, width = 8, height = 4, dpi = 300)
+print(p_topsis)  # Critical: print() to show in R session

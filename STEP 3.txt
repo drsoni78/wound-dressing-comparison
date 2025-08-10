@@ -1,0 +1,15 @@
+coded_long <- coded_df %>%
+  pivot_longer(cols = Absorption:Cost, names_to = 'Property', values_to = 'Code')
+
+invalid <- coded_long %>% filter(!Code %in% c(1,2,3))
+if (nrow(invalid) == 0) {
+  message("All codes are valid.")
+} else {
+  print(invalid)
+}
+
+code_counts <- coded_long %>%
+  group_by(Class, Property, Code) %>%
+  summarise(n = n(), .groups = 'drop')
+
+write_csv(code_counts, 'code_counts_per_class_property.csv')

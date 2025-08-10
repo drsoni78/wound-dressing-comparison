@@ -1,0 +1,100 @@
+# Load required libraries
+library(fmsb)
+library(RColorBrewer)
+library(scales)
+
+# --- Step 1: Prepare data as DATA.FRAME (critical!) ---
+# Use class_means from earlier
+radar_df <- class_means %>%
+  select(-Property) %>%
+  as.matrix()
+
+# Assign row names
+rownames(radar_df) <- class_means$Property
+
+# Convert to data.frame BEFORE adding Max/Min
+radar_df <- as.data.frame(radar_df)
+
+# Now add Max and Min rows (as vectors, with correct names)
+radar_plot_df <- rbind(
+  Max = 3,  # applies to all columns
+  Min = 1,
+  radar_df   # now a data.frame
+)
+
+# Verify it's a data.frame
+class(radar_plot_df)  # Should say "data.frame"
+
+# --- Step 2: Define colors ---
+classes <- colnames(radar_plot_df)  # All columns are classes
+colors_border <- brewer.pal(n = length(classes), name = "Dark2")
+colors_fill <- alpha(colors_border, 0.3)
+
+# --- Step 3: Save to PNG ---
+png("figs/figure_radar_classes.png", width = 800, height = 800, res = 150)
+
+# Initialize plot and catch errors
+tryCatch({
+  # Open graphics device (plot.new is now called by png())
+  par(mar = c(3, 3, 4, 3) + 0.1, bg = "white", mfrow = c(1, 1))
+  
+  # Plot radar chart — pass data.frame directly
+  radarchart(
+    radar_plot_df,           # ✅ now a data.frame
+    axistype = 1,
+    pcol = colors_border,
+    pfcol = colors_fill,
+    plwd = 2,
+    plty = 1,
+    cglcol = "lightgrey",
+    cglty = 1,
+    cglwd = 0.8,
+    axislabcol = "grey",
+    caxislabels = c("1", "2", "3"),
+    vlcex = 0.8,
+    title = "Wound Dressing Class Profiles"
+  )
+  
+  # Add legend
+  legend("topright", legend = classes, bty = "n", pch = 20,
+         col = colors_border, pt.cex = 3, cex = 1.0)
+  
+}, error = function(e) {
+  cat("ERROR in radar chart:", e$message, "\n")
+})
+
+# Always close the device
+dev.off()
+
+# --- Step 4: Display in RStudio (interactive view) ---
+# Re-plot in R session
+tryCatch({
+  # This will show in Plots pane
+  par(mar = c(3, 3, 4, 3) + 0.1, bg = "white")
+  radarchart(
+    radar_plot_df,
+    axistype = 1,
+    pcol = colors_border,
+    pfcol = colors_fill,
+    plwd = 2,
+    plty = 1,
+    cglcol = "lightgrey",
+    cglty = 1,
+    cglwd = 0.8,
+    axislabcol = "grey",
+    caxislabels = c("1","2","3"),
+    vlcex = 0.8,
+    title = "Class Profiles (Interactive)"
+  )
+  legend("topright", legend = classes, bty = "n", pch = 20,
+         col = colors_border, pt.cex = 3, cex = 1.0)
+}, error = function(e) {
+  warning("Could not display radar chart interactively: ", e$message)
+})
+
+# Final check
+if (file.exists("figs/figure_radar_classes.png")) {
+  cat("✅ SUCCESS: Radar chart saved to figs/figure_radar_classes.png\n")
+} else {
+  cat("❌ FAILED: File not created. Try creating figs/ folder manually.\n")
+}

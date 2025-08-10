@@ -1,0 +1,8 @@
+res_topsis <- read_csv("topsis_class_ranking_equal_weights.csv", show_col_types = FALSE)
+top1_df <- read_csv("bootstrap_top1_frequency.csv", show_col_types = FALSE)
+
+best <- res_topsis$Class[1]
+freq <- round(100 * top1_df$Top1_Freq[top1_df$Class == best], 1)
+
+cat("**Final Result:**\n")
+cat(sprintf('**%s** ranked #1 in TOPSIS and was top in **%s%%** of bootstrap samples.\n', best, freq))

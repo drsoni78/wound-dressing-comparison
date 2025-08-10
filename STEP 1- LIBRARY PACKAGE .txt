@@ -1,0 +1,42 @@
+---
+title: "Wound Dressing Comparative Analysis — Reproducible R Markdown"
+author: "Prepared for: Navneet Soni"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+  word_document: default
+---
+
+```{r setup, include=TRUE}
+# Install and load required packages
+packages <- c('tidyverse', 'rstatix', 'ggplot2', 'scales', 'cowplot', 'fmsb', 'readr', 'RColorBrewer')
+inst <- packages[!(packages %in% installed.packages()[,"Package"])]
+if(length(inst) > 0) {
+  install.packages(inst, repos = "https://cran.rstudio.com/")
+}
+
+library(tidyverse)
+library(rstatix)
+library(ggplot2)
+library(scales)
+library(cowplot)
+library(fmsb)
+library(readr)
+library(RColorBrewer)
+
+# Set options
+options(width = 120)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.path = 'figs/'  # Save figures to figs/ folder
+)
+
+# Create figs folder if not exists
+if (!dir.exists("figs")) {
+  dir.create("figs")
+}

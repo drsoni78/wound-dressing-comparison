@@ -1,0 +1,36 @@
+coded_df <- tribble(
+  ~Class, ~Brand, ~Absorption, ~Gelling, ~MVTR, ~BacterialBarrier, ~Adherence, ~Conformability, ~Cushioning, ~EaseRemoval, ~HeavyExudate, ~Cost,
+  # Hydrocolloids
+  'Hydrocolloid','DuoDERM',      2,3,2,2,1,2,1,2,1,2,
+  'Hydrocolloid','Comfeel',      2,3,2,2,3,2,1,3,2,2,
+  'Hydrocolloid','TegadermHydrocolloid',2,2,3,2,2,3,1,2,1,2,
+  'Hydrocolloid','UrgoTul',      2,3,2,2,3,3,1,3,1,2,
+  'Hydrocolloid','ActivHeal_HC', 2,3,2,2,2,2,2,2,1,2,
+  # Hydrogels
+  'Hydrogel','Intrasite',        1,1,3,1,3,3,1,3,1,2,
+  'Hydrogel','Aquagel',          1,1,3,1,3,3,1,3,1,2,
+  'Hydrogel','Solosite',         1,1,3,1,3,3,1,3,1,2,
+  'Hydrogel','ActivHeal_HG',     1,1,3,1,3,3,1,3,1,3,
+  'Hydrogel','NuGel',            1,1,3,1,3,3,1,3,1,2,
+  # Foams
+  'Foam','Allevyn',              3,1,2,2,3,3,3,3,3,2,
+  'Foam','Mepilex',              3,1,2,2,3,3,3,3,3,2,
+  'Foam','Biatain',              3,1,2,2,3,3,3,3,3,2,
+  'Foam','Tielle',               2,1,2,2,2,3,3,2,3,2,
+  'Foam','TegadermFoam',         2,1,2,2,3,3,3,3,2,2,
+  # Alginates
+  'Alginate','Kaltostat',        3,3,1,1,2,2,1,2,3,2,
+  'Alginate','Sorbsan',          3,3,1,1,2,2,1,2,3,2,
+  'Alginate','Algisite',         3,3,1,1,2,2,1,2,3,2,
+  'Alginate','Melgisorb',        3,3,1,1,2,2,1,2,3,2,
+  'Alginate','BiatainAlginate',  3,3,1,1,2,2,1,2,3,2,
+  # Hydrofiber
+  'Hydrofiber','AQUACEL',        3,3,2,2,3,3,2,3,3,1,
+  'Hydrofiber','AQUACEL_Ag',     3,3,2,3,3,3,2,3,3,1,
+  'Hydrofiber','Durafiber',      3,3,2,2,3,3,2,3,3,2,
+  'Hydrofiber','BiatainFiber',   3,3,2,2,3,3,2,3,3,2,
+  'Hydrofiber','AQUACEL_Extra',  3,3,2,2,3,3,2,3,3,1
+)
+
+print(coded_df)
+write_csv(coded_df, 'coded_dataset_25x10.csv')
