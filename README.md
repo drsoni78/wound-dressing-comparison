@@ -1,6 +1,18 @@
 # wound-dressing-comparison
 Reproducible R analysis comparing 25 commercial wound dressings for exuding wounds using TOPSIS, bootstrap, and manufacturer data."
-# Comparative Analysis of Wound Dressings for Exuding Wounds
+# Comparative Analysis of Wound Dressings for Exuding Wounds⚠️
+Note from the Author
+
+This project was created to promote transparency in wound care decision-making.  
+It has not been published in a journal. I tried to publish no one accepted my work 
+
+If you adapt this work, I ask only one thing:  
+Acknowledge the effort behind open science. 
+
+Credit where it’s due.  
+Even if no one is watching.  
+
+— Dr. Navneet Soni, 2025
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -24,3 +36,4 @@ The analysis compares **25 commercial wound dressings** across five classes (Hyd
 ---
 
 ## 📁 Repository Structure
+
